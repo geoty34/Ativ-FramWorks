@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@200;600&display=swap');
+
+:root{
+    --primeira-cor: black;
+    --segunda-cor: deeppink;
+    --terceira-cor: #fff;
+
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: var(--primeira-cor);
+    color: var(--terceira-cor);
+    font-family: 'Montserrat', sans-serif;
+}
+
+body.site{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    
+    
+}
+
+.site .container{
+    flex-grow: 1;
+}
+
+.cabecalho{
+
+    margin: 2% 10% 2% 10%;
+
+   
+
+}
+.cabecalho nav{
+    display: flex;
+    gap: 25px;
+    
+}
+   .cabecalho nav a{
+       text-decoration: none;
+       color:#ededed;
+
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    margin: 5% 10% 10% 10%;
+}
+
+
+.container .conteudo{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.container .conteudo h1{
+    font-family: 'Krona One', sans-serif;
+}
+
+.container .conteudo h1 span{
+   color:var(--segunda-cor);
+
+
+}
+
+.container .conteudo p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+.container .conteudo .redes-sociais{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 27px;
+
+}
+.container .conteudo .redes-sociais a{
+    width: 200px;
+    border: solid 1px var(--segunda-cor);
+    padding: 8px 0px;
+    text-align: center;
+    color:#fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+
+
+}
+
+
+
+.container .avatar{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rodape{
+    display: flex;
+    height: 80px;
+    background: rgb(183, 57, 124);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Responsivo */
+
+@media (max-width: 800px) {
+   
+    .container{
+        flex-direction: column-reverse;
+
+    }
+
+    .container .conteudo, 
+    .container .avatar{
+        width: 100%;
+
+    }
+
+    .container .conteudo .redes-sociais a{
+        width: 100%;
+    }
+
+
+     
+}

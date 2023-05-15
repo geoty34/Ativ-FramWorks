@@ -1,0 +1,12 @@
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #000001;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    color:#ededed
+    
+    
+}
