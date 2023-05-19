@@ -1,0 +1,12 @@
+:root {
+    --main-bg-color:#002f49;
+}
+
+.head {
+    background: var(--main-bg-color);
+    color: #fff
+}
+
+.container1{
+    background-color: #002f49;
+}
