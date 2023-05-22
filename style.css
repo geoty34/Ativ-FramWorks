@@ -1,5 +1,6 @@
 :root {
     --main-bg-color:#002f49;
+    --secondary-font-color:#fff;
 }
 
 .head {
@@ -7,6 +8,22 @@
     color: #fff
 }
 
-.container1{
-    background-color: #002f49;
+.destaque{
+    background-color: var(--main-bg-color);
+    color: var(--secondary-font-color);
+}
+
+.destaque img{
+    max-width:100%;
+
+}
+
+
+
+
+/* CSS PARA DISPOSITIVOS GRANDES */
+@media screen and (min-width: 1080px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
 }
