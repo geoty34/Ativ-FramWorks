@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 08/08/2023</title>
+</head>
+
+<body>
+    <img onclick="clicou()" src="waddles.jpg" alt="" srcset="" style="border-radius: 200px;">
+    <h1 id="mensagem"></h1>
+
+    <input type="text">
+
+    <script>
+        var mensagem = document.getElementById("mensagem");
+
+        var imagem = document.querySelector("img");
+
+        var input = document.querySelector("input");
+
+
+
+        //Opção 1
+        function clicou() {
+            mensagem.innerText = "Onkii onkii!";
+        }
+
+        //Opção 2
+        imagem.onmousemove = function () {
+            mensagem.innerText = "Onkii, Waddles!!!!";
+
+        }
+
+        //Opção 3
+        imagem.addEventListener("drag", () => {
+            mensagem.innerText = "Waddles, Waddles, Waddles!";
+
+        });
+
+        //Opção 3 exemplo 2
+        input.addEventListener("keyup", (evento) => {
+
+            console.log(evento);
+
+            var conteudoInput = input.value;
+            if(conteudoInput.length <= 3 ){
+                mensagem.innerText = "Preciso de mais detalhes!";
+                
+
+            }else{
+
+                if(conteudoInput == "waddles"){
+                    mensagem.innerText = "Waddles, Waddles, Waddles!";
+                }
+                if(conteudoInput == "onkii"){
+                    mensagem.innerText = "Onkii, Waddles!!!!";
+                }
+                
+
+
+            //mensagem.innerText = "Waddles, Waddles, Waddles!";
+
+        }});
+
+
+    </script>
+
+</body>
+
+</html>
