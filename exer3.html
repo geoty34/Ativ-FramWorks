@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicio 3</title>
+</head>
+<body style="background-color: blueviolet;">
+    <h1>JavaScript</h1>
+    <button>Clique aqui!</button>
+
+    <script>
+        const botao = document.querySelector("button");
+        const h1 = document.querySelector("h1");
+
+        botao.addEventListener("click", () => {
+            h1.style.color = "Green";
+            h1.style.backgroundColor = "Black";
+            h1.style.fontSize = "50px";
+            h1.textContent = "Boaaa!!";
+        });
+    </script>
+</body>
+</html>
