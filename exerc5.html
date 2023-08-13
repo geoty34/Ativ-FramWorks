@@ -9,78 +9,52 @@
 </head>
 
 <body>
-    <img onclick="clicou()" src="waddles.jpg" alt="" srcset="" style="border-radius: 200px;">
-    <h1 id="mensagem"></h1>
-
-    <input type="text">
-    <span></span>
-
-    <script>
-        var mensagem = document.getElementById("mensagem");
-
-        var imagem = document.querySelector("img");
-
-        var input = document.querySelector("input");
-
-
-
-        //Opção 1
-        function clicou() {
-            mensagem.innerText = "Onkii onkii!";
-        }
-
-        //Opção 2
-        imagem.onmousemove = function () {
-            mensagem.innerText = "Onkii, Waddles!!!!";
-
-        }
-     //Opção 3
-     imagem.addEventListener("keyup", (evento) => {
-            console.log(evento);
-            var conteudoInput = input.value;
-            if(conteudoInput.length <= 3 ){
-                mensagem.innerText = "Preciso de mais detalhes!";
-            }else if
-                (conteudoInput == "Flocos"){
-                    mensagem.innerText = "Ahh, Prefiro chocolate!";
-                }
-                else if(conteudoInput == "Chocolate"){
-                    mensagem.innerText = "Eu amo sorvete de chocolate!!!!";
-                }else{
-                    mensagem.innerText = "Não gosto de sorvete de " + conteudoInput;
-
+    <h1 style="color: chartreuse;" id="sorvete">Exercicio 5</h1>
+    <img onclick="clicou()" src="https://ih1.redbubble.net/image.435244466.5349/flat,750x1000,075,f.u2.jpg" alt=""
+        srcset="" style="border-radius:50%" width="20%" /><br>
+   
+        <label for="sorveteText">Qual é seu sabor favorito de sorvete?</label><br><br>
+        <input type="text" id="sorveteText">
+        <br><br>
+        <button type="submit" id="sorveteBtn">Enviar</button>
+        <br>
+        <p id="sorveteResposta"></p>
+        
+        
+        <script>
+            var mensagem = document.getElementById("mensagem");
+            var imagem = document.querySelector("img");
+            var input = document.querySelector("input");
+    
+    
+            //Exercicio
+            sorveteBtn.onclick = function () {
+    
+                var sorveteText = document.getElementById('sorveteText').value;
+                var sorveteResposta = document.getElementById('sorveteResposta');
+                var sorveteBtn = document.getElementById('sorveteBtn');
+    
+                if (sorveteText.length > 3) {
+    
+                    if (sorveteText == 'chocolate') {
+                        sorveteResposta.textContent = 'Eu amo sorvete de chocolate!';
+                    }
+                    else if (sorveteText == 'flocos') {
+                        sorveteResposta.textContent = 'Ahh, mas chocolate é o meu favorito...';
+                    }
+    
+    
             }
-            mensagem.innerText = "Waddles, Waddles, Waddles!";
-
-        });
-
-        //Opção 3 exemplo 2
-        input.addEventListener("keyup", (evento) => {
-
-            console.log(evento);
-
-            var conteudoInput = input.value;
-            if(conteudoInput.length <= 3 ){
-                mensagem.innerText = "Preciso de mais detalhes!";
-                
-
-            }else{
-
-                if(conteudoInput == "waddles"){
-                    mensagem.innerText = "Waddles, Waddles, Waddles!";
+                else if (sorveteText == '') {
+                    sorveteResposta.textContent = 'Você não respondeu a pergunta!';
                 }
-                if(conteudoInput == "onkii"){
-                    mensagem.innerText = "Onkii, Waddles!!!!";
-                }
-                
+                else
+                    sorveteResposta.textContent = 'Ahh, eu esperava um sabor de sorvete...';
+            }
+    
+    
+        </script>
+    </body>
+    
+    </html>
 
-
-            //mensagem.innerText = "Waddles, Waddles, Waddles!";
-
-        }});
-
-
-    </script>
-</body>
-
-</html>
