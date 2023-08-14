@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+</head>
+
+<body>
+
+
+
+    
+            <legend>Exercicio 6</legend>
+            <img onclick="clicou()" src="https://ih1.redbubble.net/image.435244466.5349/flat,750x1000,075,f.u2.jpg">
+
+            <h1 id="mensagem"></h1>
+
+            <input type="text" name="" id="">
+
+
+            <h3 id="ModoEscurotext"></h3>
+            <button onclick="modClaro()">Modo Escuro</button>
+            <button onclick="modEscuro()">Modo Claro</button>
+
+
+
+            <script>
+
+                
+
+                var mensagem = document.getElementById('mensagem');
+
+              
+                var imagem = document.querySelector('img');
+
+                var input = document.querySelector('input');
+
+
+
+                function modClaro() {
+                    var element = document.body;
+                    var content = document.getElementById("ModoEscurotext");
+                    element.className = "modClaro";
+                    content.innerText = "Modo Escuro Ativo";
+                }
+
+                function modEscuro() {
+                    var element = document.body;
+                    var content = document.getElementById("ModoEscurotext");
+                    element.className = "modEscuro";
+                    content.innerText = "Modo Escuro Desabilitado";
+                }
+
+                // Opção 1
+
+                function clicou() {
+
+                    mensagem.innerText = "Onkii, Waddles!!!";
+                }
+
+                // Opção 2
+
+                imagem.onmousemove = function () {
+
+                    mensagem.innerText = "Waddles, Waddles de terninho!";
+
+                }
+
+                // Opção 3
+
+                imagem.addEventListener('drag', () => {
+                    mensagem.innerText = "Eii! Não amasse meu terninho!"
+                });
+
+                // Opção 3 exemplo 2 
+
+                input.addEventListener('keyup', (evento) => {
+
+                    console.log(evento);
+
+                    var conteudoInput = input.value;
+
+                    if (conteudoInput.length <= 3) {
+                        mensagem.innerText = 'Preciso de mais detalhes';
+                    } else {
+                        if (conteudoInput == 'chocolate') {
+                            mensagem.innerText = "Boa escolha!";
+                        }
+                    }
+                });
+
+
+            </script>
+        
+
+    <style>
+        body {
+            text-align: center;
+        }
+
+        legend{
+            color: palevioletred;
+            font-size: 100px;
+        }
+        form {
+            align-content: center;
+        }
+
+
+        img {
+            border-radius: 90%;
+            width: 10%;
+            height: 10%;
+            box-shadow: 3px 3px 3px palevioletred;
+            margin-bottom: 2%;
+            margin-top: 4%;
+        }
+
+        input {
+            margin: 10px;
+            border-radius: 0.70rem;
+            border-color: palevioletred;
+        }
+
+        button {
+            border-radius: 0.70rem;
+            border: none;
+            background-color: palevioletred;
+            padding: 7px;
+            color: aliceblue;
+        }
+
+        .modClaro {
+            background-color: black;
+            color: white
+        }
+
+        .modEscuro {
+            background-color: white;
+            color: black;
+        }
+    </style>
+
+
+</body>
+
+</html>
