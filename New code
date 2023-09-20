@@ -1,0 +1,127 @@
+//Caso os motores estejam invertidos, troque todos os valores HIGH por LOW e vice-versa
+
+//Declarando sensores
+int sensorLinha, sensorDir, sensorEsq;
+int sensorIniFim;
+
+//Declarando velocidades de operação
+int velMin = 130, velMed = 150 , velMax = 160; 
+int     contaFim = 8; //Conta marcas de início, fim e cruzamentos
+boolean flagFim = false; 
+long    tempoTotal; //Tempo total da volta
+long    tempoExtra = 2000; //Tempo extra para seguir linha
+
+
+//Declarando limiar utilizado para os sensores
+int limiar = 500;
+
+//Declarando os pinos do Arduino ligados a entrada da Ponte H
+int ENA = 5; //TEM QUE SER PWD ~
+int IN1 = 2;
+int IN2 = 4;
+
+int ENB = 6;//TEM QUE SER PWD ~
+int IN3 = 7;
+int IN4 = 8;
+
+void setup(){
+  //Define os pinos como saida de dados
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENA,  OUTPUT);
+  pinMode(ENB,  OUTPUT);
+  
+  //Define os pinos dos sensores como entrada de dados
+  pinMode(A0, INPUT); //sensor_inicio_fim
+  pinMode(A1, INPUT); //sensor_direito
+  pinMode(A2, INPUT); //sensor_esquerdo
+  pinMode(A3, INPUT); //sensor_reta
+  Serial.begin(9600);
+}
+
+void para_frente(int vel){
+  //velocidade dos motores
+  analogWrite(ENA, vel);
+  analogWrite(ENB, vel);
+
+  //Liga os motores
+  digitalWrite(IN1, LOW);//MA
+  digitalWrite(IN2, HIGH);//MA
+  
+  digitalWrite(IN3, LOW);//MB
+  digitalWrite(IN4, HIGH);//MB
+}
+
+void vira_para_esquerda(int vel){
+  //MotorA_frente
+  analogWrite(ENA, vel);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  
+  //MotorB_tras
+  analogWrite(ENB, vel);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void vira_para_direita(int vel) {
+  //MotorA_tras
+  analogWrite(ENA, vel);
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  
+  //MotorB_frente 
+  analogWrite(ENB, vel);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void segueLinha(){  
+      
+  //lendo os sensores
+  sensorIniFim = analogRead(A0);
+  sensorDir    = analogRead(A1); 
+  sensorLinha  = analogRead(A2);
+  sensorEsq    = analogRead(A3);
+
+  Serial.println("Sensor: ");
+  Serial.println(sensorEsq);
+
+  //Se estiver na linha, segue em frente na velocidade máxima
+  if ((sensorLinha < limiar && sensorDir > limiar && sensorEsq > limiar) || sensorLinha < limiar && sensorEsq < limiar && sensorDir < limiar){
+    para_frente(velMax);    
+  }
+  
+  //Se o sensor direito for ativado, vira para a direita na velocidade media
+  if (sensorEsq > limiar && sensorDir < limiar){
+    vira_para_direita(velMed);
+  }
+ 
+  //Se o sensor esquerdo for ativado, vira para a esquerda na velocidade media
+  if (sensorEsq < limiar && sensorDir > limiar){
+    vira_para_esquerda(velMed);
+  }
+}
+
+void loop(){
+   //Segue linha até encontrar marca de fim de pista
+  while(contaFim > 0){
+    segueLinha();
+    if (sensorIniFim < limiar)
+       flagFim = true; 
+    if (sensorIniFim > limiar && flagFim == true){
+       flagFim=false;
+       contaFim--;
+    }
+  }
+
+ //Segue linha por mais 2 segundos antes de parar
+ tempoTotal = millis();
+ while((millis() - tempoTotal) < tempoExtra)
+   segueLinha();
+
+ //Espera 10s
+ delay(10000);
+ }
