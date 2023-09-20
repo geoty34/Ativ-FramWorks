@@ -1,0 +1,134 @@
+//Componentes: Ponte H L298D e sensor InfraRed
+//Programador: Evandro Cantu
+ 
+//Veriáveis para sensores de linha e velocidade
+int     sensorEsq, sensorLinha, sensorDir;
+int     velMin = 150, velMed = 150, velMax = 150; //Velocidades dos motores
+int     limiar = 300; //limiar do sensor de luz
+
+//Variáveis para sensores de início e fim de pista
+int     sensorFim;
+int     contaFim = 50; //Conta marcas de início, fim e cruzamentos
+boolean flagFim = false; 
+long    tempoTotal; //Tempo total da volta
+long    tempoExtra = 2000; //Tempo extra para seguir linha
+
+
+//Definicoes pinos Arduino ligados a entrada da Ponte H
+int IN1 = 2;
+int IN2 = 4;
+int IN3 = 7;
+int IN4 = 8;
+int  MA = 5; //Motor direito
+int  MB = 6; //Motor esquerdo
+
+void setup(){
+  
+  //Define os pinos como saida  
+  pinMode(IN1, OUTPUT);  
+  pinMode(IN2, OUTPUT);  
+  pinMode(IN3, OUTPUT);  
+  pinMode(IN4, OUTPUT);
+  pinMode(MA,  OUTPUT);  
+  pinMode(MB,  OUTPUT);  
+
+  Serial.begin(9600);
+  
+}
+
+void para_frente(int vel) {
+  //Configura velocidade dos motores
+  analogWrite(MA, vel);   
+  analogWrite(MB, vel);   
+  //Aciona o motores 
+  digitalWrite(IN1, LOW);  //A 
+  digitalWrite(IN2, HIGH); //A
+  
+  digitalWrite(IN3, LOW);  //B
+  digitalWrite(IN4, HIGH); //B   
+}
+
+void vira_esquerda(int vel) {
+  
+  //MotorA_frente
+  analogWrite(MA, vel);
+  digitalWrite(IN1, LOW);  //A 
+  digitalWrite(IN2, HIGH); //A  
+  
+  //MotorB_tras 
+  analogWrite(MB, vel);   
+  digitalWrite(IN3, HIGH); //B
+  digitalWrite(IN4, LOW);  //B   
+}
+
+void vira_direita(int vel) {
+  //MotorA_tras
+  analogWrite(MA, vel);
+  digitalWrite(IN1, HIGH);  //A 
+  digitalWrite(IN2, LOW); //A  
+  //MotorB_frente 
+  analogWrite(MB, vel);   
+  digitalWrite(IN3, LOW); //B
+  digitalWrite(IN4, HIGH);  //B   
+}
+
+void para_motores() {
+  //MotorA_para
+  digitalWrite(IN1, HIGH);  //A 
+  digitalWrite(IN2, HIGH);  //A  
+  //MotorB_para 
+  digitalWrite(IN3, HIGH);  //B
+  digitalWrite(IN4, HIGH);  //B   
+}
+
+void segueLinha(){      
+
+  //le os sensores
+  sensorDir   = analogRead(1); 
+  sensorLinha = analogRead(2);
+  sensorEsq   = analogRead(3);
+  sensorFim   = analogRead(0);
+
+  //Se estiver na linha segue em frente 
+  if (sensorLinha < limiar){
+    para_frente(velMed);    
+  }
+ 
+  //Se sensorDir acha linha vire para a direita
+  if (sensorDir < limiar && sensorLinha > limiar){
+    vira_direita(velMin);
+  }
+ 
+  //Se sensorEsq acha linha vire para a esquerda
+  if (sensorEsq < limiar && sensorLinha > limiar){
+    vira_esquerda(velMin);
+  }
+
+}
+ 
+void loop(){
+
+    //Segue linha até encontrar marca de fim de pista
+    while(contaFim > 0){
+      segueLinha();
+      if (sensorFim < limiar)
+         flagFim = true; 
+      if (sensorFim > limiar && flagFim == true){
+         flagFim=false;
+         contaFim--;
+      }
+    }
+    
+    //Segue linha por mais 2 segundos antes de parar
+    tempoTotal = millis();
+    while((millis() - tempoTotal) < tempoExtra){
+      segueLinha();
+    }
+
+    // Para motores
+    para_motores();
+
+    //Espera 10s
+    delay(10000);
+
+ }
